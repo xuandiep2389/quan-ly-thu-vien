@@ -98,6 +98,8 @@ public class BookController {
     public ModelAndView viewBookDetail(@PathVariable int id){
         ModelAndView modelAndView = new ModelAndView("/book/view");
         modelAndView.addObject("book", bookService.findById(id));
+        Author author = bookService.findById(id).getAuthor();
+        modelAndView.addObject("author",author.getName());
         return modelAndView;
     }
 }
