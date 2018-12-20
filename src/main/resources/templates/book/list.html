@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>List Book</title>
 </head>
 <body>
-
+<a href="/book/create">Create new book</a>
+<h1>Books</h1>
+<table border="1">
+    <tr>
+        <th>Book title</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <th:block th:each="book : ${books}">
+        <tr>
+            <td><a th:href="@{/book/view/__${book.id}__ }" th:text="${book.name}"></a></td>
+            <td><a th:href="@{/book/edit/__${book.id}__ }">Edit</a></td>
+            <td><a th:href="@{/book/delete/__${book.id}__ }">Delete</a></td>
+        </tr>
+    </th:block>
+</table>
 </body>
 </html>
