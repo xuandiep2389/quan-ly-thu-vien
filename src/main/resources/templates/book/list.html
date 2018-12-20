@@ -21,5 +21,10 @@
         </tr>
     </th:block>
 </table>
+<div>
+    <a th:href="@{'/book/list'(page=${books.number - 1})}" th:if="${books.hasPrevious()}">Previous</a>
+    <span th:text="${books.number + 1}"></span>/<span th:text="${books.totalPages}"></span>
+    <a th:href="@{'/book/list'(page=${books.number + 1})}" th:if="${books.hasNext()}">Next</a>
+</div>
 </body>
 </html>

@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Delete book</title>
 </head>
 <body>
-
+<h1>Delete book</h1>
+<h2>Are you sure?</h2>
+<p>
+    <a href="/book/list">Book list</a>
+</p>
+<form th:action="@{/book/delete}" th:object="${book}" method="post" onsubmit="return((confirmDelete()))">
+    <input th:type="hidden" name="id" th:field="*{id}">
+    <table>
+        <tr>
+            <td>Book title:</td>
+            <td th:text="${book.name}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Delete book"></td>
+        </tr>
+    </table>
+</form>
+<script>
+    function confirmDelete() {
+        var result = confirm("Are you sure?");
+        return result;
+    }
+</script>
 </body>
 </html>

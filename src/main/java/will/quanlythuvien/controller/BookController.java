@@ -90,6 +90,6 @@ public class BookController {
     @PostMapping("/delete")
     public String deleteCustomer(@ModelAttribute("book") Book book){
         bookService.remove(book.getId());
-        return "redirect:customers";
+        return "redirect:list";
     }
 }

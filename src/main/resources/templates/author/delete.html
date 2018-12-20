@@ -10,7 +10,7 @@
 <p>
     <a href="/author/list">Author list</a>
 </p>
-<form th:action="@{/author/delete}" th:object="${author}" method="post">
+<form th:action="@{/author/delete}" th:object="${author}" method="post" onsubmit="return((confirmDelete()))">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>
@@ -23,5 +23,11 @@
         </tr>
     </table>
 </form>
+<script>
+    function confirmDelete() {
+        var result = confirm("Are you sure?");
+        return result;
+    }
+</script>
 </body>
 </html>
