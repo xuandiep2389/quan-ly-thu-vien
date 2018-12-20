@@ -93,4 +93,11 @@ public class BookController {
         bookService.remove(book.getId());
         return "redirect:list";
     }
+
+    @GetMapping("/view/{id}")
+    public ModelAndView viewBookDetail(@PathVariable int id){
+        ModelAndView modelAndView = new ModelAndView("/book/view");
+        modelAndView.addObject("book", bookService.findById(id));
+        return modelAndView;
+    }
 }
