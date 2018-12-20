@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+</head>
+<body>
+<a href="/author/create">Create new author</a>
+<h1>Authors</h1>
+<table border="1">
+    <tr>
+        <th>Author name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <th:block th:each="author : ${authors}">
+        <tr>
+            <td th:text="${author.name}"></td>
+            <td><a th:href="@{/author/edit/__${author.id}__ }">Edit</a></td>
+            <td><a th:href="@{/author/delete/__${author.id}__ }">Delete</a></td>
+        </tr>
+    </th:block>
+</table>
+<div>
+    <a th:href="@{'/author/list'(page=${authors.number - 1})}" th:if="${authors.hasPrevious()}">Previous</a>
+    <span th:text="${authors.number + 1}"></span>/<span th:text="${authors.totalPages}"></span>
+    <a th:href="@{'/author/list'(page=${authors.number + 1})}" th:if="${authors.hasNext()}">Next</a>
+</div>
+</body>
+</html>
