@@ -5,8 +5,9 @@
     <title>View Book</title>
 </head>
 <body>
+<h1>Book details</h1>
 <form>
-    <table>
+    <table border="1">
         <tr>
             <td>Id:</td>
             <td><a th:text="${book.id}"</td>
@@ -33,7 +34,7 @@
         </tr>
         <tr>
             <td>Author:</td>
-            <td><a th:text="${author}"></a></td>
+            <td><a th:text="${book.author}"></a></td>
         </tr>
     </table>
 </form>
