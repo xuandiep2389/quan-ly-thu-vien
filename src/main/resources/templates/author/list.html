@@ -10,12 +10,14 @@
 <table border="1">
     <tr>
         <th>Author name</th>
+        <th>View</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
     <th:block th:each="author : ${authors}">
         <tr>
             <td th:text="${author.name}"></td>
+            <td><a th:href="@{/author/view/__${author.id}__}">View</a></td>
             <td><a th:href="@{/author/edit/__${author.id}__ }">Edit</a></td>
             <td><a th:href="@{/author/delete/__${author.id}__ }">Delete</a></td>
         </tr>

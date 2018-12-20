@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import will.quanlythuvien.model.Author;
+import will.quanlythuvien.model.Book;
 import will.quanlythuvien.service.AuthorService;
+import will.quanlythuvien.service.BookService;
 
 @Controller
 @RequestMapping("/author")
@@ -16,6 +18,9 @@ public class AuthorController {
 
     @Autowired
     private AuthorService authorService;
+
+    @Autowired
+    private BookService bookService;
 
     @GetMapping("/create")
     public ModelAndView showCreateAuthorPage(){
@@ -84,5 +89,19 @@ public class AuthorController {
     public String deleteProvince(@ModelAttribute("author") Author author){
         authorService.remove(author.getId());
         return "redirect:list";
+    }
+
+    @GetMapping("/view/{id}")
+    public ModelAndView viewAuthor(@PathVariable("id") int id, Pageable pageable){
+        Author author = authorService.findById(id);
+        if(author == null){
+            return new ModelAndView("/error.404");
+        }
+
+        Page<Book> books = bookService.findAllByAuthor(author, pageable);
+        ModelAndView modelAndView = new ModelAndView("/author/view");
+        modelAndView.addObject("author", author);
+        modelAndView.addObject("books", books);
+        return modelAndView;
     }
 }

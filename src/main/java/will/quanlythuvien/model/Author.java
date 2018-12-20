@@ -1,6 +1,9 @@
 package will.quanlythuvien.model;
 
+import org.springframework.data.domain.Page;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "authors")
@@ -12,8 +15,19 @@ public class Author {
 
     private String name;
 
+    @OneToMany(mappedBy = "author")
+    private Set<Book> books;
+
     public int getId() {
         return id;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     public void setId(int id) {
