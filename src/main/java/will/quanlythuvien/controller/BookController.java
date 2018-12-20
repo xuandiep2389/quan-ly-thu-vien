@@ -3,6 +3,7 @@ package will.quanlythuvien.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,7 +28,7 @@ public class BookController {
     }
 
     @GetMapping("/list")
-    public ModelAndView listBook(Pageable pageable){
+    public ModelAndView listBook(@PageableDefault(size = 3) Pageable pageable){
         Page<Book> books = bookService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("/book/list");
         modelAndView.addObject("books", books);
