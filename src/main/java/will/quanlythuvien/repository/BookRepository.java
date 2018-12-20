@@ -7,5 +7,8 @@ import will.quanlythuvien.model.Author;
 import will.quanlythuvien.model.Book;
 
 public interface BookRepository extends PagingAndSortingRepository<Book, Integer> {
+
     Page<Book> findAllByAuthor(Author author, Pageable pageable);
+
+    Page<Book> findAllByNameContaining(String name, Pageable pageable);
 }

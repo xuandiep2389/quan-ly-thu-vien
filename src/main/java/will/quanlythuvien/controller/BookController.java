@@ -12,6 +12,8 @@ import will.quanlythuvien.model.Book;
 import will.quanlythuvien.service.AuthorService;
 import will.quanlythuvien.service.BookService;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/book")
 public class BookController {
@@ -100,6 +102,21 @@ public class BookController {
         modelAndView.addObject("book", bookService.findById(id));
         Author author = bookService.findById(id).getAuthor();
         modelAndView.addObject("author",author.getName());
+        return modelAndView;
+    }
+
+    @GetMapping("/search-by-title")
+    public ModelAndView searchByTitle(@RequestParam("searchByTitle") Optional<String> searchByTitle, @PageableDefault(size = 3) Pageable pageable) {
+        Page<Book> books;
+        ModelAndView modelAndView = new ModelAndView("/book/search/searchByTitle");
+        if (searchByTitle.isPresent()) {
+            books = bookService.findAllByNameContaining(searchByTitle.get(), pageable);
+        } else {
+            books = Page.empty();
+            modelAndView.addObject("nosuchtitle","There is no such title");
+        }
+
+        modelAndView.addObject("books", books);
         return modelAndView;
     }
 }

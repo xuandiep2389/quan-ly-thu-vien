@@ -15,4 +15,6 @@ public interface BookService {
     void remove(int id);
 
     Page<Book> findAllByAuthor(Author author, Pageable pageable);
+
+    Page<Book> findAllByNameContaining(String name, Pageable pageable);
 }
