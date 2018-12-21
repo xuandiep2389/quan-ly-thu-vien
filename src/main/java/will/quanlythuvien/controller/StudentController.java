@@ -54,10 +54,12 @@ public class StudentController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView showEditForm(@PathVariable int id){
+    public ModelAndView showEditForm(@PathVariable int id, Pageable pageable){
         Student student = studentService.findById(id);
         if(student != null) {
             ModelAndView modelAndView = new ModelAndView("/student/edit");
+            Page<Book> books = bookService.findAllByStudents(student, pageable);
+            modelAndView.addObject("books",books);
             modelAndView.addObject("student", student);
             return modelAndView;
 
