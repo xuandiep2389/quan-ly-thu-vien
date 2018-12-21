@@ -3,16 +3,18 @@ package will.quanlythuvien.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import will.quanlythuvien.model.Author;
 import will.quanlythuvien.model.Book;
+import will.quanlythuvien.model.Student;
 import will.quanlythuvien.model.Student;
 import will.quanlythuvien.service.BookService;
 import will.quanlythuvien.service.StudentService;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/student")
@@ -45,5 +47,78 @@ public class StudentController {
         return modelAndView;
     }
 
+    @GetMapping("/list")
+    public ModelAndView listStudent(@PageableDefault(size = 3) Pageable pageable){
+        Page<Student> students = studentService.findAll(pageable);
+        ModelAndView modelAndView = new ModelAndView("/student/list");
+        modelAndView.addObject("students", students);
+        return modelAndView;
+    }
 
+    @GetMapping("/edit/{id}")
+    public ModelAndView showEditForm(@PathVariable int id){
+        Student student = studentService.findById(id);
+        if(student != null) {
+            ModelAndView modelAndView = new ModelAndView("/student/edit");
+            modelAndView.addObject("student", student);
+            return modelAndView;
+
+        }else {
+            ModelAndView modelAndView = new ModelAndView("/error.404");
+            return modelAndView;
+        }
+    }
+
+    @PostMapping("/edit")
+    public ModelAndView updateStudent(@ModelAttribute("student") Student student){
+        studentService.save(student);
+        ModelAndView modelAndView = new ModelAndView("/student/edit");
+        modelAndView.addObject("student", student);
+        modelAndView.addObject("message", "Student updated successfully");
+        return modelAndView;
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView showDeleteForm(@PathVariable int id){
+        Student student = studentService.findById(id);
+        if(student != null) {
+            ModelAndView modelAndView = new ModelAndView("/student/delete");
+            modelAndView.addObject("student", student);
+            return modelAndView;
+
+        }else {
+            ModelAndView modelAndView = new ModelAndView("/error.404");
+            return modelAndView;
+        }
+    }
+
+    @PostMapping("/delete")
+    public String deleteStudent(@ModelAttribute("student") Student student){
+        studentService.remove(student.getId());
+        return "redirect:list";
+    }
+
+    @GetMapping("/view/{id}")
+    public ModelAndView viewStudent(@PathVariable int id){
+        ModelAndView modelAndView = new ModelAndView("/student/view");
+        modelAndView.addObject("student", studentService.findById(id));
+        Book book = studentService.findById(id).getBook();
+        modelAndView.addObject("book",book.getName());
+        return modelAndView;
+    }
+
+    @GetMapping("/search-by-name")
+    public ModelAndView searchByName(@RequestParam("searchByName") Optional<String> searchByName, @PageableDefault(size = 3) Pageable pageable) {
+        Page<Student> students;
+        ModelAndView modelAndView = new ModelAndView("/student/search/searchByName");
+        if (searchByName.isPresent()) {
+            students = studentService.findAllByNameContaining(searchByName.get(), pageable);
+        } else {
+            students = Page.empty();
+            modelAndView.addObject("nosuchname","There is no such name");
+        }
+
+        modelAndView.addObject("students", students);
+        return modelAndView;
+    }
 }
