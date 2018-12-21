@@ -29,7 +29,7 @@
         <tr>
             <td>Book:</td>
             <td>
-                <select th:field="*{book}">
+                <select th:field="*{books}">
                     <option th:each="p : ${books}" th:value="${p.id}" th:text="${p.name}"></option>
                 </select>
             </td>

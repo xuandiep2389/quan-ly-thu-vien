@@ -1,6 +1,8 @@
 package will.quanlythuvien.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "books")
@@ -20,9 +22,45 @@ public class Book {
 
     private int amount;
 
+    public Book(String name, String type, int pageNumber, String introduce, int amount, Author author, Set<Student> students) {
+        this.name = name;
+        this.type = type;
+        this.pageNumber = pageNumber;
+        this.introduce = introduce;
+        this.amount = amount;
+        this.author = author;
+        this.students = students;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", pageNumber=" + pageNumber +
+                ", introduce='" + introduce + '\'' +
+                ", amount=" + amount +
+                ", author=" + author +
+                ", students=" + students +
+                '}';
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
+
+    @ManyToMany(mappedBy = "books")
+    private Set<Student> students = new HashSet<>();
+
 
     public int getId() {
         return id;
@@ -91,16 +129,4 @@ public class Book {
         this.amount = amount;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", pageNumber=" + pageNumber +
-                ", introduce='" + introduce + '\'' +
-                ", amount=" + amount +
-                ", author=" + author +
-                '}';
-    }
 }

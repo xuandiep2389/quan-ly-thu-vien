@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import will.quanlythuvien.model.Author;
 import will.quanlythuvien.model.Book;
+import will.quanlythuvien.model.Student;
 import will.quanlythuvien.repository.BookRepository;
 import will.quanlythuvien.service.BookService;
 
@@ -43,5 +44,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public Page<Book> findAllByNameContaining (String name, Pageable pageable) {
         return bookRepository.findAllByNameContaining(name, pageable);
+    }
+
+    @Override
+    public Page<Book> findAllByStudents(Student student, Pageable pageable) {
+        return bookRepository.findAllByStudents(student, pageable);
     }
 }

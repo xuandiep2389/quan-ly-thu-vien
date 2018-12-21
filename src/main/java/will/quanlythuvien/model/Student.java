@@ -1,6 +1,8 @@
 package will.quanlythuvien.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -16,11 +18,11 @@ public class Student {
 
     private int numberOfBook;
 
-    public Student(String name, String status, int numberOfBook, Book book) {
+    public Student(String name, String status, int numberOfBook, Set<Book> books) {
         this.name = name;
         this.status = status;
         this.numberOfBook = numberOfBook;
-        this.book = book;
+        this.books = books;
     }
 
     public int getNumberOfBook() {
@@ -31,9 +33,24 @@ public class Student {
         this.numberOfBook = numberOfBook;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "student_book",
+    joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private Set<Book> books = new HashSet<>();
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
 
     @Override
     public String toString() {
@@ -42,7 +59,7 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", status='" + status + '\'' +
                 ", numberOfBook=" + numberOfBook +
-                ", book=" + book +
+                ", books=" + books +
                 '}';
     }
 
@@ -68,14 +85,6 @@ public class Student {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
     }
 
     public Student(String name, String status, int numberOfBook) {

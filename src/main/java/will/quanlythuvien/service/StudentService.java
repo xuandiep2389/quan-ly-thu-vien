@@ -15,7 +15,7 @@ public interface StudentService {
 
     void remove(int id);
 
-    Page<Student> findAllByBook(Book book, Pageable pageable);
-
     Page<Student> findAllByNameContaining(String name, Pageable pageable);
+
+    Page<Student> findAllByBooks(Book book, Pageable pageable);
 }

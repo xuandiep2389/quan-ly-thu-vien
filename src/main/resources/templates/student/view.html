@@ -24,10 +24,11 @@
             <td>Number of book borrowed:</td>
             <td><a th:text="${student.numberOfBook}"></a></td>
         </tr>
-        <tr>
-            <td>Author:</td>
-            <td><a th:text="${author}"></a></td>
-        </tr>
+        <th:block th:each="book : ${books}">
+            <tr>
+                <td th:text="${book.name}"></td>
+            </tr>
+        </th:block>
     </table>
 </form>
 <a th:href="@{/student/list}">Back to list</a>

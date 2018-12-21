@@ -7,9 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import will.quanlythuvien.model.Author;
 import will.quanlythuvien.model.Book;
-import will.quanlythuvien.model.Student;
 import will.quanlythuvien.model.Student;
 import will.quanlythuvien.service.BookService;
 import will.quanlythuvien.service.StudentService;
@@ -110,6 +108,20 @@ public class StudentController {
         }
 
         modelAndView.addObject("students", students);
+        return modelAndView;
+    }
+
+    @GetMapping("/view/{id}")
+    public ModelAndView viewStudent(@PathVariable("id") int id, Pageable pageable){
+        Student student = studentService.findById(id);
+        if(student == null){
+            return new ModelAndView("/error.404");
+        }
+
+        Page<Book> books = bookService.findAllByStudents(student, pageable);
+        ModelAndView modelAndView = new ModelAndView("/student/view");
+        modelAndView.addObject("student", student);
+        modelAndView.addObject("books", books);
         return modelAndView;
     }
 }

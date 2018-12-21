@@ -36,12 +36,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Page<Student> findAllByBook(Book book, Pageable pageable) {
-        return studentRepository.findAllByBook(book, pageable);
+    public Page<Student> findAllByNameContaining(String name, Pageable pageable) {
+        return studentRepository.findAllByNameContaining(name, pageable);
     }
 
     @Override
-    public Page<Student> findAllByNameContaining(String name, Pageable pageable) {
-        return findAllByNameContaining(name, pageable);
+    public Page<Student> findAllByBooks(Book book, Pageable pageable) {
+        return studentRepository.findAllByBooks(book, pageable);
     }
 }

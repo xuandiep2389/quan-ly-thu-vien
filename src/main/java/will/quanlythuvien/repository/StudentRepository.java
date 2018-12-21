@@ -9,5 +9,6 @@ import will.quanlythuvien.model.Student;
 public interface StudentRepository extends PagingAndSortingRepository<Student, Integer> {
     Page<Student> findAllByNameContaining(String name, Pageable pageable);
 
-    Page<Student> findAllByBook(Book book, Pageable pageable);
+    Page<Student> findAllByBooks(Book book, Pageable pageable);
+
 }
