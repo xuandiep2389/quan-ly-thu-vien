@@ -98,15 +98,6 @@ public class StudentController {
         return "redirect:list";
     }
 
-    @GetMapping("/view/{id}")
-    public ModelAndView viewStudent(@PathVariable int id){
-        ModelAndView modelAndView = new ModelAndView("/student/view");
-        modelAndView.addObject("student", studentService.findById(id));
-        Book book = studentService.findById(id).getBook();
-        modelAndView.addObject("book",book.getName());
-        return modelAndView;
-    }
-
     @GetMapping("/search-by-name")
     public ModelAndView searchByName(@RequestParam("searchByName") Optional<String> searchByName, @PageableDefault(size = 3) Pageable pageable) {
         Page<Student> students;

@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>View Student</title>
 </head>
 <body>
-
+<h1>View student: <span th:text="${student.name}"></span></h1>
+<form>
+    <table border="1">
+        <tr>
+            <td>Id:</td>
+            <td><a th:text="${student.id}"</td>
+        </tr>
+        <tr>
+            <td>Student name:</td>
+            <td><a th:text="${student.name}"></a></td>
+        </tr>
+        <tr>
+            <td>Status:</td>
+            <td><a th:text="${student.status}"></a></td>
+        </tr>
+        <tr>
+            <td>Number of book borrowed:</td>
+            <td><a th:text="${student.numberOfBook}"></a></td>
+        </tr>
+        <tr>
+            <td>Author:</td>
+            <td><a th:text="${author}"></a></td>
+        </tr>
+    </table>
+</form>
+<a th:href="@{/student/list}">Back to list</a>
 </body>
 </html>
