@@ -14,6 +14,23 @@ public class Student {
 
     private String status;
 
+    private int numberOfBook;
+
+    public Student(String name, String status, int numberOfBook, Book book) {
+        this.name = name;
+        this.status = status;
+        this.numberOfBook = numberOfBook;
+        this.book = book;
+    }
+
+    public int getNumberOfBook() {
+        return numberOfBook;
+    }
+
+    public void setNumberOfBook(int numberOfBook) {
+        this.numberOfBook = numberOfBook;
+    }
+
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
@@ -24,6 +41,7 @@ public class Student {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", status='" + status + '\'' +
+                ", numberOfBook=" + numberOfBook +
                 ", book=" + book +
                 '}';
     }
@@ -60,15 +78,10 @@ public class Student {
         this.book = book;
     }
 
-    public Student(String name, String status, Book book) {
+    public Student(String name, String status, int numberOfBook) {
         this.name = name;
         this.status = status;
-        this.book = book;
-    }
-
-    public Student(String name, String status) {
-        this.name = name;
-        this.status = status;
+        this.numberOfBook = numberOfBook;
     }
 
     public Student() {

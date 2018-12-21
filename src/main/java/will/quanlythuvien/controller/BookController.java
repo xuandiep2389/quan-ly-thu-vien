@@ -25,7 +25,7 @@ public class BookController {
     private AuthorService authorService;
 
     @ModelAttribute("authors")
-    public Page<Author> provinces(Pageable pageable) {
+    public Page<Author> authors(Pageable pageable) {
         return authorService.findAll(pageable);
     }
 
