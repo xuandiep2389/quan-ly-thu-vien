@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import will.quanlythuvien.model.Book;
@@ -34,4 +35,15 @@ public class StudentController {
         modelAndView.addObject("student", new Student());
         return modelAndView;
     }
+
+    @PostMapping("/create")
+    public ModelAndView saveStudent(@ModelAttribute("student") Student student){
+        studentService.save(student);
+        ModelAndView modelAndView = new ModelAndView("/student/create");
+        modelAndView.addObject("student", new Student());
+        modelAndView.addObject("message", "New student created successfully");
+        return modelAndView;
+    }
+
+
 }
